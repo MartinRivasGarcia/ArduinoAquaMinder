@@ -132,9 +132,9 @@ void loop() {
     struct tm ahora;
 
     // actualizar clima cada 1 hora
- /*   if (millis() - lastWeatherUpdate > 3600000UL || climaHorasCount == 0) {
+    if (millis() - lastWeatherUpdate > 3600000UL || climaHorasCount == 0) {
         getWeatherForecast();
-    }*/
+    }
 
     // --- Pedir configuración cada 3 segundos ---
     if (nowMillis - lastConfigMillis >= CONFIG_INTERVAL_MS) {
