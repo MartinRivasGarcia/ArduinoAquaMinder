@@ -150,7 +150,7 @@ void updateValve(int i) {
             // NO return; permitimos que sensores/schedule tomen el control luego
         }
 
-      /*  if (conf.weather_enable) {
+        if (conf.weather_enable) {
             if (climaHorasCount == 0) {
                 Serial.println("⚠️ Clima habilitado pero sin datos → no bloqueo riego");
             }
@@ -158,7 +158,7 @@ void updateValve(int i) {
                 Serial.println("🚫 Riego bloqueado por lluvia");
                 return;
             }
-        }*/
+        }
 
         // MODO SENSOR
         // MODO SCHEDULED (SelectedDays o IntervalDays)
