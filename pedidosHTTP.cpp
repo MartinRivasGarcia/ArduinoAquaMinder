@@ -5,7 +5,7 @@
 
 #define USE_SERIAL Serial
 
-const String ip_server = "http://190.136.240.174:3000";
+const String ip_server = "http://200.58.105.167";
 
 void getUsuarios(){
   
@@ -138,7 +138,7 @@ void getConfig() {
     // ------------------------------
     // AHORA sí parseamos la config completa
     // ------------------------------
-    parseConfigJSON(payload);
+    parseConfigJSON(payload, true);
 
     // ------------------------------
     // GUARDAR EN NVS
@@ -153,7 +153,7 @@ void getConfig() {
 }
 
 
-void parseConfigJSON(const String &jsonStr) {
+void parseConfigJSON(const String &jsonStr, bool is_backend) {
 
     StaticJsonDocument<4096> doc;
 
@@ -161,6 +161,19 @@ void parseConfigJSON(const String &jsonStr) {
     if (err) {
         Serial.print("❌ Error JSON: ");
         Serial.println(err.f_str());
+        return;
+    }
+    
+     String  id_guardado = doc["id_device"].as<String>();
+
+    if (id_guardado.length() == 0 && !is_backend) {
+        Serial.println("❌ No hay id_device en prefs");
+        return;
+    }
+
+    if (id_guardado != id_device && !is_backend) {
+        Serial.printf("Id_guardado: %d, Id_device:%d",id_guardado,id_device);
+        Serial.println("❌ ID no coincide");
         return;
     }
 
@@ -251,6 +264,7 @@ void parseConfigJSON(const String &jsonStr) {
         Serial.println();
     }
     }
+    
 
 }
 

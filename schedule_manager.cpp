@@ -68,12 +68,12 @@ bool shouldStartSelectedDays(int i) {
     const auto &conf = config.valvulas[i];
     struct tm now;
     if (!getNow(now)){
-    Serial.println("Sali por el 1er if");
+    //Serial.println("Sali por el 1er if");
       return false;  
     } 
 
     if (!isSelectedDay(conf, now)){
-        Serial.println("Sali por el 2do if");
+      //  Serial.println("Sali por el 2do if");
      return false;
     }
 

@@ -36,6 +36,7 @@
 
 unsigned long lastConfigMillis = 0;
 const unsigned long CONFIG_INTERVAL_MS = 2000; // 2 segundos
+unsigned long lastWifiMillis;
 
 /*
   SI el dispositivo no tiene wifi o no lo encuentra, habilitar el BT para que el usuario le pase la red y pass por ahi
@@ -60,6 +61,16 @@ void conectarWiFi(String ssid, String pass) {
     } else {
         Serial.println("\nERROR: No se pudo conectar a WiFi");
         BLE_init();
+    }
+}
+
+void chequearConexion(String ssid, String pass){
+  if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\nWiFi conectado");
+        Serial.print("IP: ");
+        Serial.println(WiFi.localIP());
+    } else {
+        WiFi.begin(ssid, pass);
     }
 }
 
@@ -125,11 +136,13 @@ void setup() {
             reportWateringStatus(config.valvulas[i].id_valvula, false);
         }
   }
+  lastWifiMillis = millis();
 }
 
 void loop() {
     unsigned long nowMillis = millis();
     struct tm ahora;
+    
 
     // actualizar clima cada 1 hora
     if (millis() - lastWeatherUpdate > 3600000UL || climaHorasCount == 0) {
@@ -144,6 +157,11 @@ void loop() {
         Serial.print(ahora.tm_hour); Serial.print(":"); Serial.println(ahora.tm_min);
         
         getConfig();
+    }
+
+    if (nowMillis - lastWifiMillis >= 60000) {
+      chequearConexion(wifi_ssid,wifi_pass);
+      lastWifiMillis = nowMillis; 
     }
 
     // --- Actualizar válvulas ---

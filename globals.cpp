@@ -27,12 +27,12 @@ void guardarWifi(String red, String pass) {
 
 void cargarWifi() {
   prefs.begin("wifi", true);
-  wifi_ssid = prefs.getString("red", ""); //Fabiana
-  wifi_pass = prefs.getString("pass", ""); //17473560
+  wifi_ssid = prefs.getString("red", "");
+  wifi_pass = prefs.getString("pass", "");
   //wifi_ssid = "MartinYOrne";
   //wifi_pass = "centroteca294";
-  //wifi_ssid = "Android-GC";
-  //wifi_pass = "12345679";
+ // wifi_ssid = "Android-GC";
+  //wifi_pass = "12345678";
   prefs.end();
 }
 
@@ -44,6 +44,7 @@ void guardarConfigEnPrefs() {
     StaticJsonDocument<4096> doc;
 
     // Equipo:
+    doc["id_device"] = id_device;
     doc["status"] = config.status;
     doc["equipo"]["cantidad_valvulas"] = config.equipo.cantidad_valvulas;
     doc["equipo"]["cantidad_sensores"] = config.equipo.cantidad_sensores;
@@ -100,7 +101,7 @@ void cargarConfigDePrefs() {
     }
 
     Serial.println("Cargando config desde prefs...");
-    parseConfigJSON(json);
+    parseConfigJSON(json, false);
 }
 
 bool obtenerTiempo(struct tm &tinfo) {

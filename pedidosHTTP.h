@@ -6,7 +6,7 @@
 void getUsuarios();
 void getConfig();
 
-void parseConfigJSON(const String &jsonStr);
+void parseConfigJSON(const String &jsonStr, bool is_backend);
 void reportWateringStatus(int id_valvula, bool is_watering);
 void reportHumidityLog(int id_valvula, float humedad, const struct tm &now);
 void notificacion(String mensaje);
